@@ -54,7 +54,7 @@ export default function Gallery({ images, tint, vtName }) {
   return (
     <div className={`gal${auto ? '' : ' paused'}`} style={{ '--tint': tint, '--iv': `${INTERVAL}ms` }} onPointerEnter={e => e.pointerType === 'mouse' && set({ hover: true })} onPointerLeave={() => set({ hover: false })}
       onFocus={() => set({ focus: true })} onBlur={() => set({ focus: false })}>
-      <div className="gal-stage" ref={stage} data-cursor="Drag" style={vtName ? { viewTransitionName: vtName } : undefined} role="region" aria-roledescription="carousel" aria-label="Product photos" tabIndex={0}
+      <div className="gal-stage" ref={stage} data-cursor="native" style={vtName ? { viewTransitionName: vtName } : undefined} role="region" aria-roledescription="carousel" aria-label="Product photos" tabIndex={0}
         onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} onKeyDown={key}>
         <div className={`gal-track${flags.dragging ? ' dragging' : ''}`} style={{ transform: `translate3d(calc(${-i * 100}% + ${drag}px), 0, 0)` }}>
           {images.map((m, k) => (

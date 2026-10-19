@@ -30,7 +30,7 @@ export default function Cursor() {
       if (!raf) raf = requestAnimationFrame(loop);
       const t = e.target.closest?.('[data-cursor], a, button, input, select, textarea, label, [role="button"]');
       if (!t) setMode('');
-      else if (t.dataset.cursor === 'none') setMode('hide');
+      else if (t.dataset.cursor === 'none' || t.dataset.cursor === 'native') setMode('hide');
       else if (t.dataset.cursor) setMode('label', t.dataset.cursor);
       else setMode('link');
       const m = e.target.closest?.('[data-magnetic]');
