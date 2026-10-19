@@ -33,16 +33,17 @@ export default function Hero() {
     const afterLoad = () => { idleId = (window.requestIdleCallback || (f => setTimeout(f, 250)))(start); };
     if (document.readyState === 'complete') afterLoad(); else addEventListener('load', afterLoad, { once: true });
 
-    const io = new IntersectionObserver(([e]) => {
+    // Keep the background video looping while the page is open, even when the hero
+    // scrolls out of view. Pause only in a hidden tab, then resume when it is active.
+    const vis = () => {
       if (!v.src) return;
-      if (e.isIntersecting && !document.hidden) v.play().catch(() => {}); else v.pause();
-    });
-    io.observe(hero.current);
-    const vis = () => { if (v.src && document.hidden) v.pause(); };
+      if (document.hidden) v.pause();
+      else v.play().catch(() => {});
+    };
     document.addEventListener('visibilitychange', vis);
 
     return () => {
-      cancelled = true; io.disconnect(); detach();
+      cancelled = true; detach();
       document.removeEventListener('visibilitychange', vis);
       removeEventListener('load', afterLoad);
       if (idleId && window.cancelIdleCallback) window.cancelIdleCallback(idleId);

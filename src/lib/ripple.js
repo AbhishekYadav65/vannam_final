@@ -1,7 +1,7 @@
 // Water-droplet refraction over the hero video.
 // Performance rule: nothing is drawn and no loop runs unless a ripple is alive (about one second after a pointer gesture).
 // The plain <video> is what people see the rest of the time, so idle cost is zero.
-const MAX = 6;
+const MAX = 8;
 const VS = 'attribute vec2 p;varying vec2 uv;void main(){uv=p*.5+.5;gl_Position=vec4(p,0.,1.);}';
 const FS = `#ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp float;
@@ -22,11 +22,11 @@ void main(){
     float fade = pow(1. - t, 1.6) * smoothstep(0., .08, t);
     float a = (dist - R) / w, b = (dist - R * .6) / (w * .9);
     float s = (sin(a * 5.03) * exp(-a * a) + .45 * sin(b * 5.03) * exp(-b * b)) * fade;
-    disp += d / dist * s * 3.4; shine += s;
+    disp += d / dist * s * 5.1; shine += s;
   }
   vec2 q = (px + disp) / res;
   vec2 v = vec2((1. - fit.x) * focus + q.x * fit.x, (1. - fit.y) * .5 + q.y * fit.y);
-  vec3 c = texture2D(tex, vec2(v.x, 1. - v.y)).rgb + shine * vec3(.014, .011, .009);
+  vec3 c = texture2D(tex, vec2(v.x, 1. - v.y)).rgb + shine * vec3(.019, .015, .012);
   gl_FragColor = vec4(c, 1.);
 }`;
 
@@ -99,7 +99,7 @@ export function attachRipple({ hero, video, canvas }) {
     if (!ready) init();
     if (failed || !ready) return;
     if (ripples.length >= MAX) ripples.shift();
-    ripples.push({ x, y, t0: now, life: 900 + Math.random() * 300, R: 36 + Math.random() * 18 });
+    ripples.push({ x, y, t0: now, life: 1050 + Math.random() * 350, R: 43 + Math.random() * 21 });
     if (!raf) raf = requestAnimationFrame(tick);
   };
 
@@ -110,7 +110,7 @@ export function attachRipple({ hero, video, canvas }) {
     if (failed || e.pointerType === 'touch') return;
     const [x, y] = local(e), now = performance.now();
     if (!last) { last = [x, y]; lastAt = now; return; }
-    if (Math.hypot(x - last[0], y - last[1]) > 90 && now - lastAt > 220) { spawn(x, y, now); last = [x, y]; lastAt = now; }
+    if (Math.hypot(x - last[0], y - last[1]) > 60 && now - lastAt > 150) { spawn(x, y, now); last = [x, y]; lastAt = now; }
   }, sig);
   hero.addEventListener('pointerdown', e => {
     if (failed || e.pointerType === 'mouse') return;
