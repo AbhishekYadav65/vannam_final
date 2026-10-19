@@ -1,0 +1,55 @@
+/* Dialogs: product pop-up and bag drawer */
+dialog.dlg{padding:0;border:0;background:var(--cream);color:var(--txt);max-width:none;max-height:none}
+dialog.dlg::backdrop{background:rgba(19,10,14,.62)}
+dialog.dlg[open]{animation:dlg-in .4s var(--ease)}
+@keyframes dlg-in{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+.dlg-x{position:absolute;top:16px;right:16px;z-index:3;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--ivory);transition:background-color .3s,transform .3s var(--ease)}
+.dlg-x:hover{background:var(--cherry);transform:rotate(90deg)}
+.dlg-x.static{position:static}
+.dlg-x svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+
+/* product */
+dialog.dlg-product{width:min(1020px,calc(100vw - 28px));max-height:calc(100dvh - 28px);margin:auto;border-radius:var(--r-lg);overflow:auto}
+.pd{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:0}
+.pd-gal{display:grid;gap:14px;align-content:start;padding:clamp(14px,2vw,22px);background:var(--tint,var(--blush))}
+.pd-main{width:100%;height:auto;border-radius:20px;background:rgba(255,255,255,.35)}
+.pd-thumbs{display:flex;gap:10px;flex-wrap:wrap}
+.pd-thumbs button{width:64px;height:64px;border-radius:14px;overflow:hidden;border:2px solid transparent;background:#fff;opacity:.75;transition:opacity .3s,border-color .3s}
+.pd-thumbs button[aria-current=true]{border-color:var(--ink);opacity:1}
+.pd-thumbs img{width:100%;height:100%;object-fit:cover}
+.pd-info{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:clamp(24px,3.4vw,46px)}
+.pd-info h3{font-size:clamp(1.9rem,3vw,2.7rem);line-height:1.04}
+.kicker{color:var(--cherry);margin:0}
+.price{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px;font-size:1.1rem;line-height:1.2}
+.price span{font-weight:500}.price s{color:var(--txt-soft);font-size:.9rem}.price i{font-style:normal;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cherry)}
+.pd-desc{color:var(--txt-soft);line-height:1.65}
+.pd-list{display:grid;gap:8px}
+.pd-list li{position:relative;padding-left:22px;font-size:.95rem}
+.pd-list li::before{content:"";position:absolute;left:0;top:.52em;width:9px;height:9px;border-radius:50%;background:var(--rose)}
+.pd-fab{font-size:.9rem;line-height:1.6;color:var(--txt-soft)}.pd-fab strong{display:inline-block;min-width:3.4em;color:var(--txt);font-weight:500}
+.pd-info .btn{margin-top:auto}
+@media (max-width:800px){.pd{grid-template-columns:1fr}.pd-main{max-height:52vh;object-fit:contain}}
+
+/* bag */
+dialog.dlg-bag{width:min(440px,100vw);height:100dvh;margin:0 0 0 auto;border-radius:var(--r-lg) 0 0 var(--r-lg)}
+dialog.dlg-bag[open]{animation:drawer-in .45s var(--ease)}
+@keyframes drawer-in{from{transform:translateX(40px);opacity:0}to{transform:none;opacity:1}}
+.bag{display:flex;flex-direction:column;min-height:100%;padding:24px}
+.bag-top{display:flex;align-items:center;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid var(--line-l)}
+.bag-top h3{font-size:2rem}
+.bag-lines{display:grid;gap:18px;padding:22px 0}
+.bag-lines li{display:grid;grid-template-columns:76px 1fr;gap:16px;align-items:start}
+.bag-img{width:76px;border-radius:16px;overflow:hidden;background:var(--tint)}
+.bag-img img{width:100%;height:auto}
+.bag-lines h4{font:500 1.3rem/1.15 var(--serif)}
+.bag-lines p{margin-top:4px;color:var(--txt-soft);font-size:.92rem}
+.qty{display:flex;align-items:center;gap:6px;margin-top:10px}
+.qty button:not(.rm){width:32px;height:32px;border-radius:50%;border:1px solid var(--line-l);font-size:1.05rem;line-height:1;transition:background-color .3s,color .3s}
+.qty button:not(.rm):hover{background:var(--ink);color:var(--ivory)}
+.qty span{min-width:24px;text-align:center;font-weight:500}
+.qty .rm{margin-left:10px;font-size:.78rem;color:var(--txt-soft);text-decoration:underline;text-underline-offset:3px}.qty .rm:hover{color:var(--cherry)}
+.bag-foot{display:grid;gap:14px;margin-top:auto;padding-top:20px;border-top:1px solid var(--line-l)}
+.bag-total{display:flex;justify-content:space-between;font:500 1.5rem/1 var(--serif)}
+.bag-note{font-size:.84rem;line-height:1.5;color:var(--txt-soft)}
+.bag-empty{display:grid;justify-items:center;gap:14px;margin:auto;padding:30px;text-align:center;color:var(--txt-soft)}
+.bag-empty .serif{font-size:2rem;color:var(--txt)}
